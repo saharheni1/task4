@@ -1,0 +1,110 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>task4</title>
+</head>
+<body>
+   
+    <h3>Interface Corona</h3>
+    <input type="text" ></input><br/>
+    <button type="submit">Ajouter</button><br/>
+
+   <h5>Enregistrées</h5>
+   <ul id="enregistrees" ></ul>
+   <h5>Vaccinées</h5>
+   <ul id="vaccinees"></ul>
+</body>
+<script>
+    let enregistrees = ["hhh", "hello","hhhhhhhhh"];
+    let vaccinees = [];
+
+
+    const button = document.querySelector('button');
+    let input = document.querySelector("input");
+    let listEnregi=document.getElementById("enregistrees");
+    let listVacc=document.getElementById("vaccinees");
+
+    
+    //onLoad
+    window.onload = loaded;
+
+
+    function loaded() {
+        listEnregi.innerHTML="";
+       listVacc.innerHTML="";
+        enregistrees.forEach(function(item, index, array) {
+            createLiEn(item);
+
+        });
+        
+        vaccinees.forEach(function(item, index, array) {
+            createLiVacc(item);
+
+        });
+        };
+    //Ajouter 
+    button.addEventListener('click', event => {
+        if (isInputEmpty()) {
+                  alert("Input empty, please type something !");
+                  return;
+                 }
+        enregistrees.push(input.value);
+        createLiEn(input.value);
+
+       
+    });
+    function createLiEn(texte)
+    {
+        let li = document.createElement("li");
+        let  btn = document.createElement("button");
+        let span =document.createElement("span");
+        li.innerHTML="nom : "+texte;
+        li.id=texte;
+        listEnregi.appendChild(li);
+        li.appendChild(btn);
+        span.innerHTML="x";
+        btn.appendChild(span);
+        btn.addEventListener("click",supprimer);
+    }
+    function createLiVacc(texte)
+    {
+        let li = document.createElement("li");
+        let  btn = document.createElement("button");
+        let span =document.createElement("span");
+        li.innerHTML="nom : "+texte;
+        li.id=texte;
+        listVacc.appendChild(li);
+        li.appendChild(btn);
+        span.innerHTML="x";
+        btn.style="background-color:red";
+        btn.appendChild(span);
+        btn.addEventListener("click",supprimer);
+    }
+
+    //supprimer
+    function supprimer(e)
+    {
+        let id = e.target.parentElement.id;
+        enregistrees.forEach(function(item, index, array) {
+            if(item==id)
+            {
+                enregistrees.splice(index,1);
+                vaccinees.push(item);
+                createLiVacc(item);
+                loaded();
+            }
+            
+        });
+    }
+    
+    function isInputEmpty() {
+    if (input.value == "") {
+        return true;
+     }
+        return false;
+    }
+</script>
+</html>
